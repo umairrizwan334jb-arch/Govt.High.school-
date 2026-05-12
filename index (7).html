@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editable School Website</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins;
+background:#eef2f7;
+}
+
+/* NAVBAR */
+
+nav{
+background:#01411C;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:white;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:15px;
+}
+
+/* HERO */
+
+.hero{
+height:90vh;
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.hero h1{
+background:rgba(0,0,0,0.6);
+color:white;
+padding:25px;
+border-radius:10px;
+width:80%;
+}
+
+/* SECTION */
+
+section{
+padding:60px 20px;
+text-align:center;
+}
+
+/* CARD */
+
+.card{
+background:white;
+max-width:750px;
+margin:auto;
+padding:25px;
+border-radius:15px;
+box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* INPUT */
+
+input, textarea{
+width:90%;
+padding:12px;
+margin:10px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+textarea{
+height:120px;
+}
+
+/* BUTTON */
+
+.btn{
+background:#01411C;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+}
+
+.btn:hover{
+background:#026b2f;
+}
+
+/* IMAGE */
+
+img{
+width:100%;
+border-radius:12px;
+margin-top:15px;
+}
+
+/* WHATSAPP */
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+width:60px;
+height:60px;
+border-radius:50%;
+background:#25D366;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+color:white;
+text-decoration:none;
+}
+
+/* FOOTER */
+
+footer{
+background:#01411C;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<h2 id="navTitle">Govt High School</h2>
+
+<div>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+<a href="#admin">Admin</a>
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<div class="hero"
+id="heroSection"
+style="background-image:url('https://images.unsplash.com/photo-1571260899304-425eee4c7efc');">
+
+<h1 id="mainTitle">
+Government of Pakistan School System
+</h1>
+
+</div>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<div class="card">
+
+<h2>About School</h2>
+
+<p id="aboutText">
+Government High School Faisalabad provides quality education and discipline.
+</p>
+
+<img id="schoolImage"
+src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b">
+
+</div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<div class="card">
+
+<h2>Contact</h2>
+
+<a id="whatsappBtn"
+class="btn"
+href="https://wa.me/923007665388"
+target="_blank">
+
+Chat on WhatsApp
+
+</a>
+
+<br><br>
+
+<iframe
+id="mapFrame"
+src="https://maps.google.com/maps?q=Faisalabad&t=&z=13&output=embed"
+width="100%"
+height="250"
+style="border:none;border-radius:10px;">
+</iframe>
+
+</div>
+
+</section>
+
+<!-- ADMIN PANEL -->
+
+<section id="admin">
+
+<div class="card">
+
+<h2>Admin Panel</h2>
+
+<input type="password"
+id="adminPass"
+placeholder="Enter Password">
+
+<button class="btn"
+onclick="checkPassword()">
+Login
+</button>
+
+<div id="updateBox"
+style="display:none;">
+
+<hr>
+
+<h3>Website Title</h3>
+
+<input type="text"
+id="newTitle"
+placeholder="New Website Title">
+
+<h3>About Text</h3>
+
+<textarea id="newAbout"
+placeholder="New About Text"></textarea>
+
+<h3>WhatsApp Number</h3>
+
+<input type="text"
+id="newWhatsapp"
+placeholder="923001234567">
+
+<h3>Google Map Location</h3>
+
+<input type="text"
+id="newLocation"
+placeholder="Faisalabad">
+
+<h3>Upload Main Image</h3>
+
+<input type="file"
+id="imageUpload"
+accept="image/*">
+
+<h3>Upload Hero Background</h3>
+
+<input type="file"
+id="heroUpload"
+accept="image/*">
+
+<br><br>
+
+<button class="btn"
+onclick="saveChanges()">
+Save All Changes
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+© 2026 Editable School Website
+</footer>
+
+<!-- FLOAT BUTTON -->
+
+<a id="floatWhatsapp"
+class="whatsapp"
+href="https://wa.me/923007665388"
+target="_blank">
+
+💬
+
+</a>
+
+<script>
+
+/* LOAD SAVED DATA */
+
+window.onload = function(){
+
+if(localStorage.getItem("title")){
+document.getElementById("mainTitle").innerText =
+localStorage.getItem("title");
+}
+
+if(localStorage.getItem("about")){
+document.getElementById("aboutText").innerText =
+localStorage.getItem("about");
+}
+
+if(localStorage.getItem("image")){
+document.getElementById("schoolImage").src =
+localStorage.getItem("image");
+}
+
+if(localStorage.getItem("hero")){
+document.getElementById("heroSection").style.backgroundImage =
+"url('" + localStorage.getItem("hero") + "')";
+}
+
+if(localStorage.getItem("whatsapp")){
+
+let num = localStorage.getItem("whatsapp");
+
+document.getElementById("whatsappBtn").href =
+"https://wa.me/" + num;
+
+document.getElementById("floatWhatsapp").href =
+"https://wa.me/" + num;
+}
+
+if(localStorage.getItem("location")){
+
+document.getElementById("mapFrame").src =
+"https://maps.google.com/maps?q=" +
+localStorage.getItem("location") +
+"&t=&z=13&output=embed";
+
+}
+
+}
+
+/* PASSWORD */
+
+const password = "admin123";
+
+/* LOGIN */
+
+function checkPassword(){
+
+let pass =
+document.getElementById("adminPass").value;
+
+if(pass === password){
+
+document.getElementById("updateBox")
+.style.display = "block";
+
+alert("Access Granted");
+
+}else{
+
+alert("Wrong Password");
+
+}
+
+}
+
+/* SAVE CHANGES */
+
+function saveChanges(){
+
+/* TITLE */
+
+let title =
+document.getElementById("newTitle").value;
+
+if(title !== ""){
+
+document.getElementById("mainTitle").innerText = title;
+
+localStorage.setItem("title", title);
+
+}
+
+/* ABOUT */
+
+let about =
+document.getElementById("newAbout").value;
+
+if(about !== ""){
+
+document.getElementById("aboutText").innerText = about;
+
+localStorage.setItem("about", about);
+
+}
+
+/* WHATSAPP */
+
+let whatsapp =
+document.getElementById("newWhatsapp").value;
+
+if(whatsapp !== ""){
+
+document.getElementById("whatsappBtn").href =
+"https://wa.me/" + whatsapp;
+
+document.getElementById("floatWhatsapp").href =
+"https://wa.me/" + whatsapp;
+
+localStorage.setItem("whatsapp", whatsapp);
+
+}
+
+/* LOCATION */
+
+let location =
+document.getElementById("newLocation").value;
+
+if(location !== ""){
+
+let mapUrl =
+"https://maps.google.com/maps?q=" +
+location +
+"&t=&z=13&output=embed";
+
+document.getElementById("mapFrame").src = mapUrl;
+
+localStorage.setItem("location", location);
+
+}
+
+/* MAIN IMAGE */
+
+let imageFile =
+document.getElementById("imageUpload").files[0];
+
+if(imageFile){
+
+let reader = new FileReader();
+
+reader.onload = function(e){
+
+document.getElementById("schoolImage").src =
+e.target.result;
+
+localStorage.setItem("image", e.target.result);
+
+}
+
+reader.readAsDataURL(imageFile);
+
+}
+
+/* HERO IMAGE */
+
+let heroFile =
+document.getElementById("heroUpload").files[0];
+
+if(heroFile){
+
+let reader2 = new FileReader();
+
+reader2.onload = function(e){
+
+document.getElementById("heroSection")
+.style.backgroundImage =
+"url('" + e.target.result + "')";
+
+localStorage.setItem("hero", e.target.result);
+
+}
+
+reader2.readAsDataURL(heroFile);
+
+}
+
+alert("All Changes Saved Successfully");
+
+}
+
+</script>
+
+</body>
+</html>
